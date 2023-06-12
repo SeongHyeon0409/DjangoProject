@@ -1,0 +1,62 @@
+<p style="text-align: center">
+    {# 대출 중인 경우 #}
+    {% if book.is_checked_out %}
+        <button class="ui button disabled">대출</button>
+        <a href="{% url 'book_borrow:give-back' book.id %}">
+            <button class="ui button">반납</button>
+        </a>
+    {% else %}
+        <a href="{% url 'book_borrow:borrow' book.id %}">
+            <button class="ui button" data-tooltip="오늘로부터 7일">대출</button>
+        </a>
+        <button class="ui button disabled">반납</button>
+    {% endif %}
+</p>
+
+<table
+        class="ui celled selectable table center aligned"
+        style="width: 130rem; margin-left: auto; margin-right: auto"
+>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>대출자</th>
+        <th>대출 일시</th>
+        <th>반납 기한일</th>
+        <th>실제 반납일</th>
+        <th>상태</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if borrow_histories %} {% for borrow_history in borrow_histories %}
+        <tr>
+            <td data-label="#">{{ borrow_history.id }}</td>
+            <td data-label="대출자">{{ borrow_history.user.username }}</td>
+            <td data-label="대출 일시">{{ borrow_history.borrowed_at }}</td>
+            <td data-label="반납 기한일">{{ borrow_history.return_deadline }}</td>
+            <td data-label="실제 반납일">
+                {{ borrow_history.returned_at | default_if_none:'' }}
+            </td>
+
+            {#  반납됨  #}
+            {% if borrow_history.is_returned %}
+                <td data-label="상태" style="background: greenyellow">반납됨</td>
+                {#  반납 안 됨  #}
+            {% else %}
+                {#  정상 대출중  #}
+                {% if not borrow_history.is_overdue %}
+                    <td data-label="상태" style="background: yellow">대출중</td>
+                    {#  연체중  #}
+                {% else %}
+                    <td data-label="상태" style="background: tomato">연체</td>
+                {% endif %} {% endif %}
+        </tr>
+    {% endfor %} {% else %}
+        <tr>
+            <td></td>
+            <td colspan="4" style="text-align: center">대출 이력이 없습니다.</td>
+            <td data-label="상태" style="background: lightskyblue">대출 가능</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>

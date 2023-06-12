@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% block head %}
+    <style>
+        .items {
+            border: 1px black solid;
+            padding: 1rem;
+        }
+
+        .ui.container.centered.grid {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ui.items .item .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+{% endblock %} {% block content %}
+    <div class="ui container large centered grid">
+        <div class="ui items center">
+            {% if user.is_authenticated %}
+                <div class="item">
+                    <div class="content">
+                        <a class="header" href="{% url 'author:list' %}">
+                            <i class="large user circle outline icon"></i>저자 목록
+                        </a>
+                        <div class="description">
+                            <p>시스템에 등록된 모든 저자의 목록을 조회합니다.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content">
+                        <a class="header" href="{% url 'book:list' %}">
+                            <i class="large book icon"></i>도서 목록
+                        </a>
+                        <div class="description">
+                            <p>시스템에 등록된 모든 도서의 목록을 조회합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div>
+                    <a href="{% url 'common:login' %}">로그인</a>이 필요한 서비스입니다.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

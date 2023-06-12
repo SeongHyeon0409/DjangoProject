@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+    <div class="ui top attached tabular menu">
+        <div class="active item">
+            <h2><i class="large book icon"></i>{{ book.title }}</h2>
+        </div>
+    </div>
+
+    <div class="ui bottom attached active tab segment">
+        <h3>출간일 : {{ book.published_at }}</h3>
+
+        <!-- MIDTERM EXAM 5~7 : 5번부터 7번 문제를 풀기 전에, 아래 주석을 해제해 주세요. -->
+        <!-- MIDTERM EXAM 5 : 아래 주석을 해제했을 때 발생하는 에러를 해결하세요. -->
+        { {% include 'book/borrow-histories.html' %} }
+    </div>
+{% endblock %}

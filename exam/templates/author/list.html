@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <table class="ui celled selectable table" style="width: 100rem; margin-left: auto; margin-right: auto;">
+            <thead>
+            <tr>
+                <th class="center aligned">#</th>
+                <th class="center aligned">이름</th>
+                <th class="center aligned">소개</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for author in authors %}
+                <tr>
+                    <td class="center aligned">{{ author.id }}</td>
+                    <td class="center aligned"><a href={% url 'author:detail' author.id %}>{{ author.name }}</a></td>
+                    <td class="center aligned">{{ author.description }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

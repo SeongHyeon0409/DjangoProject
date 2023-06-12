@@ -1,0 +1,59 @@
+{% extends 'base.html' %} {% block content %}
+    <div style="width: fit-content; padding: 20px; margin: 10% auto">
+    <div class="ui cards">
+        <div class="card">
+            <div class="content">
+                <div class="header">로그인</div>
+                <div class="meta">서비스 사용을 위해 로그인이 필요합니다.</div>
+                <div class="description">
+                    <form class="ui form" action="/common/login" method="POST">
+                        {% csrf_token %} {% if form.errors %}
+                        <div class="ui message negative">
+                            {% for field in form %}
+                                <!-- 필드 오류 -->
+                                {% if field.errors %}
+                                    <div>
+                                        <strong>{{ field.label }}</strong>
+                                        <ul>
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %} {% endfor %}
+                            <!-- 넌필드 오류 -->
+                            {% for error in form.non_field_errors %}
+                                <div>
+                                    <strong>{{ error }}</strong>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                        <div class="field">
+                            <label for="username">ID</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="username"
+                                    name="username"
+                            />
+                        </div>
+                        <div class="field">
+                            <label for="password">Password</label>
+                            <input
+                                    type="password"
+                                    class="form-control"
+                                    id="password"
+                                    name="password"
+                            />
+                        </div>
+                        <div style="text-align: center">
+                            <button class="ui button" type="submit">로그인</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</div>

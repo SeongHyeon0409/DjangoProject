@@ -1,0 +1,14 @@
+<nav class="ui menu">
+    <a class="item home" href="/">도서 대출 시스템</a>
+    <div class="right menu">
+        {% if user.is_authenticated %}
+            <a href="{% url 'common:logout' %}">
+                <button class="ui negative basic button">로그아웃</button>
+            </a>
+        {% else %}
+            <a href="{% url 'common:login' %}">
+                <button class="ui positive basic button">로그인</button>
+            </a>
+        {% endif %}
+    </div>
+</nav>

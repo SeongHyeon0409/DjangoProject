@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content %}
+    <div class="ui top attached tabular menu">
+        <div class="active item">
+            <h2><i class="large pen square icon"></i>{{ author.name }}</h2>
+        </div>
+    </div>
+    <div class="ui bottom attached active tab segment">
+        <h3>{{ author.description }}</h3>
+        <h4 style="text-align: center">출간 도서 목록</h4>
+
+        <table
+                class="ui celled selectable table center aligned"
+                style="width: 130rem; margin-left: auto; margin-right: auto"
+        >
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>제목</th>
+                <th>출간일</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in published_books %}
+                <tr>
+                    <th>{{ book.id }}</th>
+                    <td><a href="{% url 'book:detail' book.id %}">{{ book.title }}</a></td>
+                    <td>{{ book.published_at }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

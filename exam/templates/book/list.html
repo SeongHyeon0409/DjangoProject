@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <table class="ui celled selectable table" style="width: 100rem; margin-left: auto; margin-right: auto;">
+            <thead>
+            <tr>
+                <th class="center aligned">#</th>
+                <th class="center aligned">제목</th>
+                <th class="center aligned">작가 이름</th>
+                <th class="center aligned">출간일</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <td data-label="#" class="center aligned">{{ book.id }}</td>
+                    <td data-label="제목" class="center aligned" data-tooltip="대출 정보 확인"><a
+                            href={% url 'book:detail' book.id %}>{{ book.title }}</a></td>
+                    <td data-label="작가 이름" class="center aligned" data-tooltip="작가 정보 확인"><a
+                            href="{% url 'author:detail' book.author.id %}">{{ book.author.name }}</a></td>
+                    <td data-label="출간일" class="center aligned">{{ book.published_at }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
