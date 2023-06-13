@@ -1,0 +1,261 @@
+source ~/venvs/mysite/bin/activate
+
+python3 manage.py runserver
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+
+
+
+==================
+from myapp.models import Post
+from django.utils import timezone
+p=Post(message='첫 번째 메시지 생성', created_at=timezone.now(), updated_at=timezone.now())
+p.save()
+
+p=Post(message='두 번째 메시지 생성', created_at=timezone.now(), updated_at=timezone.now())
+p.save()
+
+p=Post(message='세 번째 메시지 생성', created_at=timezone.now(), updated_at=timezone.now())
+p.save()
+
+Post.objects.all()
+==========
+
+http http://localhost:8000/myapp/post/1/
+
+HTTP/1.1 200 OK
+Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+Content-Length: 144
+Content-Type: application/json
+Date: Tue, 23 May 2023 06:59:06 GMT
+Referrer-Policy: same-origin
+Server: WSGIServer/0.2 CPython/3.8.10
+Vary: Accept, Cookie
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+
+{
+    "created_at": "2023-05-23T15:43:28.035728+09:00",
+    "id": 1,
+    "message": "세 번째 메시지 생성",
+    "updated_at": "2023-05-23T15:43:28.035846+09:00"
+}
+
+
+
+
+
+http http://localhost:8000/myapp/post/ message="4th message"
+
+
+HTTP/1.1 201 Created
+Allow: GET, POST, HEAD, OPTIONS
+Content-Length: 128
+Content-Type: application/json
+Date: Tue, 23 May 2023 07:01:02 GMT
+Referrer-Policy: same-origin
+Server: WSGIServer/0.2 CPython/3.8.10
+Vary: Accept, Cookie
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+
+{
+    "created_at": "2023-05-23T16:01:02.959653+09:00",
+    "id": 8,
+    "message": "4th message",
+    "updated_at": "2023-05-23T16:01:02.959683+09:00"
+}
+
+
+
+
+
+http http://localhost:8000/myapp/post/
+
+HTTP/1.1 200 OK
+Allow: GET, POST, HEAD, OPTIONS
+Content-Length: 1210
+Content-Type: application/json
+Date: Tue, 23 May 2023 07:01:51 GMT
+Referrer-Policy: same-origin
+Server: WSGIServer/0.2 CPython/3.8.10
+Vary: Accept, Cookie
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+
+[
+    {
+        "created_at": "2023-05-23T15:43:28.035728+09:00",
+        "id": 1,
+        "message": "세 번째 메시지 생성",
+        "updated_at": "2023-05-23T15:43:28.035846+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:43:37.894357+09:00",
+        "id": 2,
+        "message": "첫 번째 메시지 생성",
+        "updated_at": "2023-05-23T15:43:37.894460+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:44:16.635439+09:00",
+        "id": 3,
+        "message": "두 번째 메시지 생성",
+        "updated_at": "2023-05-23T15:44:16.635965+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:44:22.960422+09:00",
+        "id": 4,
+        "message": "세 번째 메시지 생성",
+        "updated_at": "2023-05-23T15:44:22.960524+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:47:04.755767+09:00",
+        "id": 5,
+        "message": "message='다섯 번째 메시지 생성', created_at=timezone.now(), updated_at=timezone.now()",
+        "updated_at": "2023-05-23T15:47:04.755835+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:47:41.516729+09:00",
+        "id": 6,
+        "message": "여섯 번째 메시지",
+        "updated_at": "2023-05-23T15:47:41.516807+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:49:46.896440+09:00",
+        "id": 7,
+        "message": "일곱번째 메시지 생성",
+        "updated_at": "2023-05-23T15:49:46.896610+09:00"
+    },
+    {
+        "created_at": "2023-05-23T16:01:02.959653+09:00",
+        "id": 8,
+        "message": "4th message",
+        "updated_at": "2023-05-23T16:01:02.959683+09:00"
+    }
+]
+
+
+
+
+
+http --form PUT http://localhost:8000/myapp/post/5/ message="5th message i've changed"
+
+HTTP/1.1 200 OK
+Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+Content-Length: 141
+Content-Type: application/json
+Date: Tue, 23 May 2023 07:02:53 GMT
+Referrer-Policy: same-origin
+Server: WSGIServer/0.2 CPython/3.8.10
+Vary: Accept, Cookie
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+
+{
+    "created_at": "2023-05-23T15:47:04.755767+09:00",
+    "id": 5,
+    "message": "5th message i've changed",
+    "updated_at": "2023-05-23T16:02:53.505585+09:00"
+}
+
+
+
+
+
+http http://localhost:8000/myapp/post/
+
+
+HTTP/1.1 200 OK
+Allow: GET, POST, HEAD, OPTIONS
+Content-Length: 1140
+Content-Type: application/json
+Date: Tue, 23 May 2023 07:02:58 GMT
+Referrer-Policy: same-origin
+Server: WSGIServer/0.2 CPython/3.8.10
+Vary: Accept, Cookie
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+
+[
+    {
+        "created_at": "2023-05-23T15:43:28.035728+09:00",
+        "id": 1,
+        "message": "세 번째 메시지 생성",
+        "updated_at": "2023-05-23T15:43:28.035846+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:43:37.894357+09:00",
+        "id": 2,
+        "message": "첫 번째 메시지 생성",
+        "updated_at": "2023-05-23T15:43:37.894460+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:44:16.635439+09:00",
+        "id": 3,
+        "message": "두 번째 메시지 생성",
+        "updated_at": "2023-05-23T15:44:16.635965+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:44:22.960422+09:00",
+        "id": 4,
+        "message": "세 번째 메시지 생성",
+        "updated_at": "2023-05-23T15:44:22.960524+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:47:04.755767+09:00",
+        "id": 5,
+        "message": "5th message i've changed",
+        "updated_at": "2023-05-23T16:02:53.505585+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:47:41.516729+09:00",
+        "id": 6,
+        "message": "여섯 번째 메시지",
+        "updated_at": "2023-05-23T15:47:41.516807+09:00"
+    },
+    {
+        "created_at": "2023-05-23T15:49:46.896440+09:00",
+        "id": 7,
+        "message": "일곱번째 메시지 생성",
+        "updated_at": "2023-05-23T15:49:46.896610+09:00"
+    },
+    {
+        "created_at": "2023-05-23T16:01:02.959653+09:00",
+        "id": 8,
+        "message": "4th message",
+        "updated_at": "2023-05-23T16:01:02.959683+09:00"
+    }
+]
+
+
+
+
+
+
+
+
+============
+
+python manage.py shell 
+from myapp.serializers import PostSerializer
+from myapp.models import Post
+qs=Post.objects.first()
+qs
+serializer = PostSerializer(qs)
+serializer.data
+
+{'id': 1, 'message': '세 번째 메시지 생성', 'created_at': '2023-05-23T15:43:28.035728+09:00', 'updated_at': '2023-05-23T15:43:28.035846+09:00'}
+
+
+qs=Post.objects.all()
+qs
+<QuerySet [<Post: Post object (1)>, <Post: Post object (2)>, <Post: Post object (3)>, <Post: Post object (4)>, <Post: Post object (5)>, <Post: Post object (6)>, <Post: Post object (7)>, <Post: Post object (8)>]>
+
+
+serializer = PostSerializer(qs, many=True) 
+
+[OrderedDict([('id', 1), ('message', '세 번째 메시지 생성'), ('created_at', '2023-05-23T15:43:28.035728+09:00'), ('updated_at', '2023-05-23T15:43:28.035846+09:00')]), OrderedDict([('id', 2), ('message', '첫 번째 메시지 생성'), ('created_at', '2023-05-23T15:43:37.894357+09:00'), ('updated_at', '2023-05-23T15:43:37.894460+09:00')]), OrderedDict([('id', 3), ('message', '두 번째 메시지 생성'), ('created_at', '2023-05-23T15:44:16.635439+09:00'), ('updated_at', '2023-05-23T15:44:16.635965+09:00')]), OrderedDict([('id', 4), ('message', '세 번째 메시지 생성'), ('created_at', '2023-05-23T15:44:22.960422+09:00'), ('updated_at', '2023-05-23T15:44:22.960524+09:00')]), OrderedDict([('id', 5), ('message', "5th message i've changed"), ('created_at', '2023-05-23T15:47:04.755767+09:00'), ('updated_at', '2023-05-23T16:02:53.505585+09:00')]), OrderedDict([('id', 6), ('message', '여섯 번째 메시지'), ('created_at', '2023-05-23T15:47:41.516729+09:00'), ('updated_at', '2023-05-23T15:47:41.516807+09:00')]), OrderedDict([('id', 7), ('message', '일곱번째 메시지 생성'), ('created_at', '2023-05-23T15:49:46.896440+09:00'), ('updated_at', '2023-05-23T15:49:46.896610+09:00')]), OrderedDict([('id', 8), ('message', '4th message'), ('created_at', '2023-05-23T16:01:02.959653+09:00'), ('updated_at', '2023-05-23T16:01:02.959683+09:00')])]
+
+
+
